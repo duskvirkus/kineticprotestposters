@@ -1,39 +1,40 @@
 #pragma once
 
 #include "ofMain.h"
+#include "FunctionTypes.h"
+#include "TextFunctions.h"
+#include "TextBlock.h"
+
+#define PROJECT_NAME "TransRights"
+#define CREATOR	"Fi Graham"
+#define SAVE_FRAMES false
 
 class ofApp : public ofBaseApp{
 
 	public:
+
+		// Global Variables
+		int framesInAnimation = 1200;
+		ofColor color1, color2;
+		TextBlock textBlock;
 
 		// openFrameworks
 		void setup();
 		void update();
 		void draw();
 		
-		// Admin
-		int framesInAnimation;
+		#if SAVE_FRAMES
+		// Saving
 		ofFbo fbo;
+		unsigned int saveCount = 0;
+		unsigned char skipFactor = 4;
+		void saveFrame();
+		#endif
+
+		// Inline Helpers
 		void title();
 		void transparentBackground(ofColor color);
-		float animationProgress();
-		void saveFrame();
-
-		// Text
-		void blockTransRights(ofVec2f position, ofVec2f dimensions, int weight);
-		void blockTransRights(int x, int y, int w, int h, int weight);
-		void blockT(int x, int y, int w, int h, int weight);
-		void blockR(int x, int y, int w, int h, int weight);
-		void blockA(int x, int y, int w, int h, int weight);
-		void blockN(int x, int y, int w, int h, int weight);
-		void blockS(int x, int y, int w, int h, int weight);
-		void blockI(int x, int y, int w, int h, int weight);
-		void blockG(int x, int y, int w, int h, int weight);
-		void blockH(int x, int y, int w, int h, int weight);
-
-		// Color
-		ofColor color1, color2;
-		void setupColors();
-		void setColorsAlpha(int a);
 		ofColor lerpColor(ofColor c1, ofColor c2, float amt);
+		float animationProgress();
+
 };
