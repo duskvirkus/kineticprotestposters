@@ -1,24 +1,40 @@
 #pragma once
 
 #include "ofMain.h"
+#include "FunctionTypes.h"
+#include "TextFunctions.h"
+#include "TextBlock.h"
+
+#define PROJECT_NAME "TransRights"
+#define CREATOR	"Fi Graham"
+#define SAVE_FRAMES false
 
 class ofApp : public ofBaseApp{
 
 	public:
+
+		// Global Variables
+		int framesInAnimation = 1200;
+		ofColor color1, color2;
+		TextBlock textBlock;
+
+		// openFrameworks
 		void setup();
 		void update();
 		void draw();
-
-		void keyPressed(int key);
-		void keyReleased(int key);
-		void mouseMoved(int x, int y );
-		void mouseDragged(int x, int y, int button);
-		void mousePressed(int x, int y, int button);
-		void mouseReleased(int x, int y, int button);
-		void mouseEntered(int x, int y);
-		void mouseExited(int x, int y);
-		void windowResized(int w, int h);
-		void dragEvent(ofDragInfo dragInfo);
-		void gotMessage(ofMessage msg);
 		
+		#if SAVE_FRAMES
+		// Saving
+		ofFbo fbo;
+		unsigned int saveCount = 0;
+		unsigned char skipFactor = 4;
+		void saveFrame();
+		#endif
+
+		// Inline Helpers
+		void title();
+		void transparentBackground(ofColor color);
+		ofColor lerpColor(ofColor c1, ofColor c2, float amt);
+		float animationProgress();
+
 };
