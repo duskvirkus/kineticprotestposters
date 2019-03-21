@@ -5,20 +5,35 @@
 class ofApp : public ofBaseApp{
 
 	public:
+
+		// openFrameworks
 		void setup();
 		void update();
 		void draw();
-
-		void keyPressed(int key);
-		void keyReleased(int key);
-		void mouseMoved(int x, int y );
-		void mouseDragged(int x, int y, int button);
-		void mousePressed(int x, int y, int button);
-		void mouseReleased(int x, int y, int button);
-		void mouseEntered(int x, int y);
-		void mouseExited(int x, int y);
-		void windowResized(int w, int h);
-		void dragEvent(ofDragInfo dragInfo);
-		void gotMessage(ofMessage msg);
 		
+		// Admin
+		int framesInAnimation;
+		ofFbo fbo;
+		void title();
+		void transparentBackground(ofColor color);
+		float animationProgress();
+		void saveFrame();
+
+		// Text
+		void blockTransRights(ofVec2f position, ofVec2f dimensions, int weight);
+		void blockTransRights(int x, int y, int w, int h, int weight);
+		void blockT(int x, int y, int w, int h, int weight);
+		void blockR(int x, int y, int w, int h, int weight);
+		void blockA(int x, int y, int w, int h, int weight);
+		void blockN(int x, int y, int w, int h, int weight);
+		void blockS(int x, int y, int w, int h, int weight);
+		void blockI(int x, int y, int w, int h, int weight);
+		void blockG(int x, int y, int w, int h, int weight);
+		void blockH(int x, int y, int w, int h, int weight);
+
+		// Color
+		ofColor color1, color2;
+		void setupColors();
+		void setColorsAlpha(int a);
+		ofColor lerpColor(ofColor c1, ofColor c2, float amt);
 };
