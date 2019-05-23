@@ -15,13 +15,15 @@ void ofApp::update(){
 
 void ofApp::draw(){
 	ofBackground(backgroundColor);
-	circleGrid(200, 200, ofGetWidth() / 2, ofGetHeight() / 2, 5, 5);
+	circleGrid(200, 200, ofGetWidth() / 2, ofGetHeight() / 2, 6, 10);
 }
 
 //--------------------------------------------------------------
 // Methods
 
 void ofApp::circleGrid(int x, int y, int w, int h, int xNumber, int yNumber) {
+	if (xNumber % 2 == 0) xNumber++;
+	if (yNumber % 2 == 0) yNumber++;
 	vector<CircleData> circles;
 	for (int i = 0; i < (xNumber + 2) * (yNumber + 2); i++) {
 		circles.push_back(CircleData());
@@ -32,8 +34,8 @@ void ofApp::circleGrid(int x, int y, int w, int h, int xNumber, int yNumber) {
 		for (int j = 0; j < yNumber + 2; j++) {
 			if ((i + j * (xNumber + 2)) % 2 == 0) {
 				circles[i + j * (xNumber + 2)] = CircleData(
-					x + ((i - 1) * scale),
-					y + ((j - 1) * scale),
+					x + ((i - 1) * scale) + ofMap(ofNoise(ofGetFrameNum() * 0.005, i, j), 0, 1, 0, maxSize / 3),
+					y + ((j - 1) * scale) + ofMap(ofNoise(ofGetFrameNum() * 0.005, i + 1, j + 1), 0, 1, 0, maxSize / 3),
 					ofMap(ofNoise(ofGetFrameNum() * 0.005, i - 1, j - 1), 0, 1, maxSize / 2, maxSize)
 				);
 			}
