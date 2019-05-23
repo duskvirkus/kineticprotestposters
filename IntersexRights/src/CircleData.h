@@ -9,6 +9,7 @@ public:
 	float y;
 	float radius;
 
+	CircleData();
 	CircleData(float x, float y, float radius);
 
 };
