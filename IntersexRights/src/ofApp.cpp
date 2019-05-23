@@ -42,20 +42,46 @@ void ofApp::circleGrid(int x, int y, int w, int h, int xNumber, int yNumber) {
 	for (int i = 1; i < xNumber + 1; i++) {
 		for (int j = 1; j < yNumber + 1; j++) {
 			if ((i + j * (xNumber + 2)) % 2 == 1) {
+				int above = i - 1 + j       * (xNumber + 2);
+				int below = i + 1 + j       * (xNumber + 2);
+				int left  = i     + (j - 1) * (xNumber + 2);
+				int right = i     + (j + 1) * (xNumber + 2);
 				float calcX = ofLerp(
-					circles[i - 1 + j * (xNumber + 2)].x + circles[i - 1 + j * (xNumber + 2)].radius,
-					circles[i + 1 + j * (xNumber + 2)].x - circles[i + 1 + j * (xNumber + 2)].radius,
+					circles[above].x + circles[above].radius,
+					circles[below].x - circles[below].radius,
 					0.5
 				);
 				float calcY = ofLerp(
-					circles[i + (j - 1) * (xNumber + 2)].y + circles[i + (j - 1) * (xNumber + 2)].radius,
-					circles[i + (j + 1) * (xNumber + 2)].y - circles[i + (j + 1) * (xNumber + 2)].radius,
+					circles[left ].y + circles[left ].radius,
+					circles[right].y - circles[right].radius,
 					0.5
 				);
+				float calcRadius1 = (
+					ofDist(
+						circles[above].x,
+						circles[above].y,
+						circles[below].x,
+						circles[below].y
+					) - (
+						circles[above].radius + 
+						circles[below].radius
+					)
+				) / 2;
+				float calcRadius2 = (
+					ofDist(
+						circles[left ].x,
+						circles[left ].y,
+						circles[right].x,
+						circles[right].y
+					) - (
+						circles[left ].radius +
+						circles[right].radius
+						)
+					) / 2;
 				circles[i + j * (xNumber + 2)] = CircleData(
 					calcX,
 					calcY,
-					ofMap(ofNoise(ofGetFrameNum() * 0.005, i - 1, j - 1), 0, 1, maxSize / 2, maxSize)
+					(calcRadius1 < calcRadius2 ? calcRadius1 : calcRadius2)
 				);
 			}
 		}
