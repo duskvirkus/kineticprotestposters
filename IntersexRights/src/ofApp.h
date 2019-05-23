@@ -18,7 +18,11 @@ public:
 	void update();
 	void draw();
 
+	// Methods
+	void circleGrid(int x, int y, int w, int h, int xNumber, int yNumber);
+
 	// Inline Helpers
 	void title();
+	void intersexCircle(int x, int y, int radius);
 		
 };
