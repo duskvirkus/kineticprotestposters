@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "CircleData.h"
 
 #define PROJECT_NAME "IntersexRights"
 #define CREATOR	"Fi Graham"
@@ -20,9 +21,10 @@ public:
 
 	// Methods
 	void circleGrid(int x, int y, int w, int h, int xNumber, int yNumber);
+	void circlePack(vector<CircleData> everyOther, int width);
 
 	// Inline Helpers
 	void title();
-	void intersexCircle(int x, int y, int radius);
+	void intersexCircle(float x, float y, float radius);
 		
 };

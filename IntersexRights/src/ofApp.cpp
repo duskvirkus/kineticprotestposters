@@ -15,18 +15,34 @@ void ofApp::update(){
 
 void ofApp::draw(){
 	ofBackground(backgroundColor);
-	circleGrid(100 + sin(ofGetFrameNum() * 0.01) * ofGetWidth() / 10, 100, ofGetWidth() / 2, ofGetHeight() / 2, 5, 5);
+	circleGrid(200, 200, ofGetWidth() / 2, ofGetHeight() / 2, 5, 5);
 }
 
 //--------------------------------------------------------------
 // Methods
 
 void ofApp::circleGrid(int x, int y, int w, int h, int xNumber, int yNumber) {
+	vector<CircleData> circles;
 	float scale = w > h ? w / xNumber : h / yNumber;
-	for (int i = 0; i < xNumber; i++) {
-		for (int j = 0; j < yNumber; j++) {
-			intersexCircle(x + (i * scale), y + (j * scale), scale / 3);
+	float maxSize = sqrt(scale/2 * scale/2 + scale/2 * scale/2);
+	for (int i = - 1; i <= xNumber; i++) {
+		for (int j = - 1; j <= yNumber; j++) {
+			if ((i + j * (xNumber + 2)) % 2 == 0) {
+				circles.push_back(CircleData(
+					x + (i * scale),
+					y + (j * scale),
+					ofMap(ofNoise(ofGetFrameNum() * 0.005, i, j), 0, 1, maxSize / 2, maxSize)
+				));
+				//intersexCircle(x + (i * scale), y + (j * scale), scale / 3);
+			}
 		}
+	}
+	circlePack(circles, xNumber);
+}
+
+void ofApp::circlePack(vector<CircleData> everyOther, int width) {
+	for (int i = 0; i < everyOther.size(); i++) {
+		intersexCircle(everyOther[i].x, everyOther[i].y, everyOther[i].radius);
 	}
 }
 
@@ -39,7 +55,7 @@ inline void ofApp::title() {
 	ofSetWindowTitle(titleStream.str());
 }
 
-inline void ofApp::intersexCircle(int x, int y, int radius) {
+inline void ofApp::intersexCircle(float x, float y, float radius) {
 	ofSetColor(circlesColor);
 	ofDrawCircle(x, y, radius);
 	ofSetColor(backgroundColor);
