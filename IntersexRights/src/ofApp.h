@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "CircleGrid.h"
 #include "CircleData.h"
 
 #define PROJECT_NAME "IntersexRights"
@@ -14,14 +15,12 @@ public:
 	ofColor backgroundColor;
 	ofColor circlesColor;
 
+	CircleGrid circleGrid;
+
 	// openFrameworks
 	void setup();
 	void update();
 	void draw();
-
-	// Methods
-	void circleGrid(int x, int y, int w, int h, int xNumber, int yNumber);
-	void circlePack(vector<CircleData> everyOther, int width);
 
 	// Inline Helpers
 	void title();
