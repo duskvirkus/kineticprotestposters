@@ -16,6 +16,7 @@ void ofApp::setup(){
 void ofApp::update(){
 	title();
 	circleGrid.update();
+	circleGrid.scaleCircles(0.75);
 }
 
 void ofApp::draw(){

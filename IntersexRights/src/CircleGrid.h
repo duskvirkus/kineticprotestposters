@@ -18,6 +18,7 @@ public:
 
 	void setup(int columns, int rows, float width, float height);
 	void update();
+	void scaleCircles(float scale);
 	void draw(float x, float y);
 
 	int index(int x, int y, int w);

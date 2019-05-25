@@ -87,6 +87,12 @@ void CircleGrid::update() {
 	}
 }
 
+void CircleGrid::scaleCircles(float scale) {
+	for (int i = 0; i < circles.size(); i++) {
+		circles[i].radius *= scale;
+	}
+}
+
 void CircleGrid::draw(float x, float y) {
 	for (int i = 0; i < circles.size(); i++) {
 		if (!maskOn || mask[i]) {
