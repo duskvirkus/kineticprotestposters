@@ -17,6 +17,7 @@ public:
 	vector<bool> mask;
 
 	void setup(int columns, int rows, float width, float height);
+	void applyMask(ofImage maskImage);
 	void update();
 	void scaleCircles(float scale);
 	void draw(float x, float y);

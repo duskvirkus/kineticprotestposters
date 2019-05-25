@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxBDF.h"
 #include "CircleGrid.h"
 #include "CircleData.h"
 
@@ -14,6 +15,8 @@ public:
 
 	ofColor backgroundColor;
 	ofColor circlesColor;
+
+	ofxBDF font;
 
 	CircleGrid circleGrid;
 

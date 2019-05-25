@@ -23,6 +23,15 @@ void CircleGrid::setup(int columns, int rows, float width, float height) {
 	}
 }
 
+void CircleGrid::applyMask(ofImage maskImage) {
+	maskImage.draw(0, 0, 100, 100);
+	for (int i = 0; i < maskImage.getWidth() && i < columns + 1; i++) {
+		for (int j = 0; j < maskImage.getHeight() && j < rows + 1; j++) {
+			mask[index(i + 1, j + 1, columns + 2)] = maskImage.getColor(i, j).getBrightness() < 127;
+		}
+	}
+}
+
 void CircleGrid::update() {
 	float scale = width > height ? width / columns : height / rows;
 	float maxSize = sqrt(scale / 2 * scale / 2 + scale / 2 * scale / 2);
