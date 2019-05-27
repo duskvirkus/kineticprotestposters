@@ -28,8 +28,9 @@ void ofApp::draw(){
 
 	ofBackground(backgroundColor);
 	ofSetColor(circlesColor);
-	drawLine(line1, ofGetMouseX(), ofGetMouseY());
-	drawLine(line2, 300, 300);
+	ofNoFill();
+	drawLine(line1, ofGetWidth() / 10, ofGetHeight() * 2 / 5, 6);
+	drawLine(line2, ofGetWidth() / 10, ofGetHeight() * 3 / 5, 8);
 
 }
 
@@ -42,7 +43,9 @@ vector<CircleGrid> ofApp::circleGridsFromText(string text) {
 		for (int j = 0; j < font.chars.size(); j++) {
 			if (font.chars[j].code == text[i]) {
 				CircleGrid temp;
-				temp.setup(6, 10, 200, 200);
+				float size = ofGetWidth() * 0.8;
+				float scaleFactor = 1.66;
+				temp.setup(6, 10, size / text.length() * scaleFactor, size / text.length() * scaleFactor);
 				temp.applyMask(font.chars[j].character);
 				circleGrids.push_back(temp);
 			}
@@ -54,17 +57,21 @@ vector<CircleGrid> ofApp::circleGridsFromText(string text) {
 void ofApp::updateLine(vector<CircleGrid>& line) {
 	for (int i = 0; i < line.size(); i++) {
 		line[i].update();
-		line[i].scaleCircles(0.75);
+		line[i].scaleCircles(0.8);
 	}
 }
 
 void ofApp::drawLine(vector<CircleGrid>& line, float x, float y) {
+	drawLine(line, x, y, 1);
+}
+
+void ofApp::drawLine(vector<CircleGrid>& line, float x, float y, int iterations) {
 	float xOffset = 0;
 	for (int i = 0; i < line.size(); i++) {
 		if (i > 0) {
 			xOffset += line[i - 1].width * 0.6;
 		}
-		line[i].draw(x + xOffset, y);
+		line[i].draw(x + xOffset, y, iterations);
 	}
 }
 

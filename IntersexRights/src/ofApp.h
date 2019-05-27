@@ -30,6 +30,7 @@ public:
 	vector<CircleGrid> circleGridsFromText(string text);
 	void updateLine(vector<CircleGrid>& line);
 	void drawLine(vector<CircleGrid>& line, float x, float y);
+	void drawLine(vector<CircleGrid>& line, float x, float y, int iterations);
 
 	// Inline Helpers
 	void title();

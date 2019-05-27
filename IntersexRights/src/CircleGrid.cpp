@@ -21,6 +21,11 @@ void CircleGrid::setup(int columns, int rows, float width, float height) {
 		mask[index(this->columns + 1, i, this->columns + 2)] = false;
 		if (rows % 2 == 0) mask[index(this->columns, i, this->columns + 2)] = false;
 	}
+
+	noiseScale = 1;
+	sinScale = 0.01;
+	movementScale = 1.2;
+	radiusScale = 1.2;
 }
 
 void CircleGrid::applyMask(ofImage maskImage) {
@@ -39,9 +44,9 @@ void CircleGrid::update() {
 		for (int j = 0; j < rows + 2; j++) {
 			if (index(i, j, (columns + 2)) % 2 == 0) {
 				circles[index(i, j, (columns + 2))] = CircleData(
-					((i - 1) * scale) + ofMap(ofNoise(ofGetFrameNum() * 0.01, i, j), 0, 1, 0, maxSize / 3),
-					((j - 1) * scale) + ofMap(ofNoise(ofGetFrameNum() * 0.01, i + 1, j + 1), 0, 1, 0, maxSize / 3),
-					ofMap(ofNoise(ofGetFrameNum() * 0.01, i - 1, j - 1), 0, 1, maxSize / 2, maxSize)
+					((i - 1) * scale) + ofMap(ofNoise(sin(ofGetFrameNum() * sinScale) * noiseScale, i - 1, j + 1), 0, 1, 0, maxSize * movementScale),
+					((j - 1) * scale) + ofMap(ofNoise(sin(ofGetFrameNum() * sinScale) * noiseScale, i + 1, j - 1), 0, 1, 0, maxSize * movementScale),
+					ofMap(ofNoise(sin(ofGetFrameNum() * sinScale) * noiseScale, i - 1, j - 1), 0, 1, maxSize / 2, maxSize * radiusScale)
 				);
 			}
 		}
@@ -102,10 +107,15 @@ void CircleGrid::scaleCircles(float scale) {
 }
 
 void CircleGrid::draw(float x, float y) {
+	draw(x, y, 1);
+}
+
+void CircleGrid::draw(float x, float y, int interations) {
 	for (int i = 0; i < circles.size(); i++) {
 		if (!maskOn || mask[i]) {
-			// TODO replace with lambda
-			ofDrawCircle(circles[i].x + x, circles[i].y + y, circles[i].radius);
+			for (int j = 0; j < interations; j++) {
+				ofDrawCircle(circles[i].x + x, circles[i].y + y, circles[i].radius - (j * 0.5));
+			}
 		}
 	}
 }
