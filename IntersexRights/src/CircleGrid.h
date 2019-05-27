@@ -24,5 +24,8 @@ public:
 
 	int index(int x, int y, int w);
 
+	string toString();
+
 };
 
+ostream& operator<<(ostream& os, CircleGrid cg);

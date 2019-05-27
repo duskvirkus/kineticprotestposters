@@ -38,7 +38,6 @@ void CircleGrid::update() {
 	for (int i = 0; i < columns + 2; i++) {
 		for (int j = 0; j < rows + 2; j++) {
 			if (index(i, j, (columns + 2)) % 2 == 0) {
-				//cout << index(i, j, (columns + 2)) << endl;
 				circles[index(i, j, (columns + 2))] = CircleData(
 					((i - 1) * scale) + ofMap(ofNoise(ofGetFrameNum() * 0.01, i, j), 0, 1, 0, maxSize / 3),
 					((j - 1) * scale) + ofMap(ofNoise(ofGetFrameNum() * 0.01, i + 1, j + 1), 0, 1, 0, maxSize / 3),
@@ -113,4 +112,17 @@ void CircleGrid::draw(float x, float y) {
 
 inline int CircleGrid::index(int x, int y, int w) {
 	return x + y * w;
+}
+
+string CircleGrid::toString() {
+	string s = "CircleGrid: w: " + to_string(width) + " h: " + to_string(height) + "\n";
+	for (int i = 0; i < circles.size(); i++) {
+		s += "  " + to_string(i) + circles[i].toString() + "\n";
+	}
+	return s;
+}
+
+ostream& operator<<(ostream& os, CircleGrid cg) {
+	os << cg.toString();
+	return os;
 }

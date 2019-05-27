@@ -12,4 +12,8 @@ public:
 	CircleData();
 	CircleData(float x, float y, float radius);
 
+	string toString();
+
 };
+
+ostream& operator<<(ostream& os, CircleData cd);

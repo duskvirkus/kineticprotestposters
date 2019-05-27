@@ -18,12 +18,18 @@ public:
 
 	ofxBDF font;
 
-	CircleGrid circleGrid;
+	vector<CircleGrid> line1;
+	vector<CircleGrid> line2;
 
 	// openFrameworks
 	void setup();
 	void update();
 	void draw();
+
+	// Methods
+	vector<CircleGrid> circleGridsFromText(string text);
+	void updateLine(vector<CircleGrid>& line);
+	void drawLine(vector<CircleGrid>& line, float x, float y);
 
 	// Inline Helpers
 	void title();
