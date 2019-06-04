@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "CircleData.h"
+#include "NumberOfFrames.h"
 
 class CircleGrid {
 public:
@@ -17,7 +18,6 @@ public:
 	vector<bool> mask;
 
 	float noiseScale;
-	float sinScale;
 	float movementScale;
 	float radiusScale;
 

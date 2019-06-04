@@ -23,7 +23,6 @@ void CircleGrid::setup(int columns, int rows, float width, float height) {
 	}
 
 	noiseScale = 1;
-	sinScale = 0.01;
 	movementScale = 1.2;
 	radiusScale = 1.2;
 }
@@ -44,9 +43,27 @@ void CircleGrid::update() {
 		for (int j = 0; j < rows + 2; j++) {
 			if (index(i, j, (columns + 2)) % 2 == 0) {
 				circles[index(i, j, (columns + 2))] = CircleData(
-					((i - 1) * scale) + ofMap(ofNoise(sin(ofGetFrameNum() * sinScale) * noiseScale, i - 1, j + 1), 0, 1, 0, maxSize * movementScale),
-					((j - 1) * scale) + ofMap(ofNoise(sin(ofGetFrameNum() * sinScale) * noiseScale, i + 1, j - 1), 0, 1, 0, maxSize * movementScale),
-					ofMap(ofNoise(sin(ofGetFrameNum() * sinScale) * noiseScale, i - 1, j - 1), 0, 1, maxSize / 2, maxSize * radiusScale)
+					((i - 1) * scale) + ofMap(
+						ofNoise(
+							sin((ofGetFrameNum() / static_cast<float>(NUMBER_OF_FRAMES)) * PI) * noiseScale,
+							cos((ofGetFrameNum() / static_cast<float>(NUMBER_OF_FRAMES)) * PI) * noiseScale,
+							i + j + 1), 
+						0, 1, 0, maxSize * movementScale
+					),
+					((j - 1) * scale) + ofMap(
+						ofNoise(
+							sin((ofGetFrameNum() / static_cast<float>(NUMBER_OF_FRAMES)) * PI) * noiseScale,
+							cos((ofGetFrameNum() / static_cast<float>(NUMBER_OF_FRAMES)) * PI) * noiseScale,
+							i + j - 1),
+						0, 1, 0, maxSize * movementScale
+					),
+					ofMap(
+						ofNoise(
+							sin((ofGetFrameNum() / static_cast<float>(NUMBER_OF_FRAMES)) * PI) * noiseScale,
+							cos((ofGetFrameNum() / static_cast<float>(NUMBER_OF_FRAMES)) * PI) * noiseScale,
+							i + j),
+						0, 1, maxSize / 2, maxSize * radiusScale
+					)
 				);
 			}
 		}
