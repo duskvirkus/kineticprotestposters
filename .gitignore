@@ -1,7 +1,5 @@
 bin/
 Bin/
-!bin/data
-!Bin/data
 build/
 Build/
 [Oo]bj/
