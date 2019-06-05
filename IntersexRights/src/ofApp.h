@@ -8,7 +8,7 @@
 
 #define PROJECT_NAME "IntersexRights"
 #define CREATOR	"Fi Graham"
-#define SAVE_FRAMES true
+#define SAVE_FRAMES false
 
 class ofApp : public ofBaseApp{
 

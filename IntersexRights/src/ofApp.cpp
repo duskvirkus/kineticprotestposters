@@ -7,8 +7,8 @@ void ofApp::setup(){
 
 	font.setup("../cherry/cherry-10-r.bdf");
 
-	line1 = circleGridsFromText("INTER"); // NTERSEX");
-	//line2 = circleGridsFromText("RIGHTS");
+	line1 = circleGridsFromText("INTERSEX");
+	line2 = circleGridsFromText("RIGHTS");
 
 	backgroundColor = ofColor(255, 216, 0);
 	circlesColor = ofColor(121, 2, 170);
@@ -37,8 +37,8 @@ void ofApp::draw(){
 	ofBackground(backgroundColor);
 	ofSetColor(circlesColor);
 	ofNoFill();
-	drawLine(line1, ofGetWidth() / 10, ofGetHeight() * 2 / 5, 6);
-	drawLine(line2, ofGetWidth() / 10, ofGetHeight() * 3 / 5, 8);
+	drawLine(line1, ofGetWidth() / 10, ofGetHeight() * 3 / 10, 6);
+	drawLine(line2, ofGetWidth() / 10, ofGetHeight() * 5 / 10, 8);
 
 	#if SAVE_FRAMES
 	fbo.end();
@@ -115,7 +115,7 @@ void ofApp::saveFrame() {
 
 inline void ofApp::title() {
 	stringstream titleStream;
-	titleStream << PROJECT_NAME << " - " << CREATOR << " - FPS: " << static_cast<int>(ofGetFrameRate()) << " frame: " << ofGetFrameNum();
+	titleStream << PROJECT_NAME << " - " << CREATOR << " - FPS: " << static_cast<int>(ofGetFrameRate()) << " - Frame: " << ofGetFrameNum();
 	ofSetWindowTitle(titleStream.str());
 }
 

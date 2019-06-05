@@ -1,5 +1,7 @@
 #include "CircleGrid.h"
 
+int CircleGrid::counter = 0;
+
 void CircleGrid::setup(int columns, int rows, float width, float height) {
 	columns % 2 == 0 ? this->columns = columns + 1 : this->columns = columns;
 	rows    % 2 == 0 ? this->rows    = rows    + 1 : this->rows    = rows;
@@ -22,9 +24,11 @@ void CircleGrid::setup(int columns, int rows, float width, float height) {
 		if (rows % 2 == 0) mask[index(this->columns, i, this->columns + 2)] = false;
 	}
 
-	noiseScale = 1;
 	movementScale = 1.2;
 	radiusScale = 1.2;
+
+	instance = counter;
+	counter++;
 }
 
 void CircleGrid::applyMask(ofImage maskImage) {
@@ -45,23 +49,23 @@ void CircleGrid::update() {
 				circles[index(i, j, (columns + 2))] = CircleData(
 					((i - 1) * scale) + ofMap(
 						ofNoise(
-							sin((ofGetFrameNum() / static_cast<float>(NUMBER_OF_FRAMES)) * PI) * noiseScale,
-							cos((ofGetFrameNum() / static_cast<float>(NUMBER_OF_FRAMES)) * PI) * noiseScale,
-							i + j + 1), 
+							sin((ofGetFrameNum() / static_cast<float>(NUMBER_OF_FRAMES)) * TWO_PI),
+							cos((ofGetFrameNum() / static_cast<float>(NUMBER_OF_FRAMES)) * TWO_PI),
+							i + j + 1 + instanceMod()), 
 						0, 1, 0, maxSize * movementScale
 					),
 					((j - 1) * scale) + ofMap(
 						ofNoise(
-							sin((ofGetFrameNum() / static_cast<float>(NUMBER_OF_FRAMES)) * PI) * noiseScale,
-							cos((ofGetFrameNum() / static_cast<float>(NUMBER_OF_FRAMES)) * PI) * noiseScale,
-							i + j - 1),
+							sin((ofGetFrameNum() / static_cast<float>(NUMBER_OF_FRAMES)) * TWO_PI),
+							cos((ofGetFrameNum() / static_cast<float>(NUMBER_OF_FRAMES)) * TWO_PI),
+							i + j - 1 + instanceMod()),
 						0, 1, 0, maxSize * movementScale
 					),
 					ofMap(
 						ofNoise(
-							sin((ofGetFrameNum() / static_cast<float>(NUMBER_OF_FRAMES)) * PI) * noiseScale,
-							cos((ofGetFrameNum() / static_cast<float>(NUMBER_OF_FRAMES)) * PI) * noiseScale,
-							i + j),
+							sin((ofGetFrameNum() / static_cast<float>(NUMBER_OF_FRAMES)) * TWO_PI),
+							cos((ofGetFrameNum() / static_cast<float>(NUMBER_OF_FRAMES)) * TWO_PI),
+							i + j + instanceMod()),
 						0, 1, maxSize / 2, maxSize * radiusScale
 					)
 				);
@@ -135,6 +139,10 @@ void CircleGrid::draw(float x, float y, int interations) {
 			}
 		}
 	}
+}
+
+inline int CircleGrid::instanceMod() {
+	return instance * 10;
 }
 
 inline int CircleGrid::index(int x, int y, int w) {
